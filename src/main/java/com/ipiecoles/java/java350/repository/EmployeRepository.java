@@ -12,7 +12,7 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
     @Query("select max(substring(matricule,2)) from Employe")
     String findLastMatricule();
 
-    Employe findByMatricule(String matricule);
+    Employe findByMatricule(String matricule); //on ne test pas la class String ou Integer
 
     @Query("select avg(performance) from Employe where SUBSTRING(matricule,0,1) = ?1 ")
     Double avgPerformanceWhereMatriculeStartsWith(String premiereLettreMatricule);
