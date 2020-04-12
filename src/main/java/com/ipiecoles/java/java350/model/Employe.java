@@ -7,11 +7,16 @@ import javax.persistence.Id;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ipiecoles.java.java350.exception.EmployeException;
 
 @Entity
 public class Employe {
 
-
+	
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,6 +34,7 @@ public class Employe {
     private Integer performance = Entreprise.PERFORMANCE_BASE;
 
     private Double tempsPartiel = 1.0;
+ 
 
     public Employe() {
     }
@@ -114,7 +120,22 @@ case SATURDAY:var = var + 1;
     }
 
     //Augmenter salaire
-    //public void augmenterSalaire(double pourcentage){}
+    public void augmenterSalaire(Double pourcentage) throws EmployeException {
+    	Double salaire = this.salaire;
+    	
+    	if(salaire == null || salaire < 0) {
+   		throw new EmployeException("Salaire non renseigné ou négatif !");
+    	} 
+  
+    	if(pourcentage == null || pourcentage < 0) {  
+   		 throw new EmployeException("pourcentage non renseigné ou négatif !");
+    	} 
+    	Double salaireNew = ((salaire) + ((salaire) * (pourcentage/100)));
+    	
+    	this.salaire = salaireNew;
+    
+    }
+    	
 
     public Long getId() {
         return id;
