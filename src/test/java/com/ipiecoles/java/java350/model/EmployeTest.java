@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.ipiecoles.java.java350.exception.EmployeException;
+
 public class EmployeTest {
 	
 	@Test
@@ -68,7 +70,7 @@ public class EmployeTest {
 			Assertions.assertThat (nbAnnees).isEqualTo(0);
 		
 	}
-/*	
+	
 	//test unitaire normale
 	@Test
 	public void testGetPrimeAnnuelleCommercialPleinTempsPerfBase() {
@@ -88,7 +90,7 @@ public class EmployeTest {
 		
 		
 	}
-*/
+
 /*
 	  // test unitaire paramettre avant qu'on a fait une coverage par mutation  // On prend que la situation PleinTemps
 	@ParameterizedTest
@@ -144,6 +146,118 @@ public class EmployeTest {
 			
 			
 		}
+		
+		@Test
+		public void testAugmenterSalairePourcentage() throws EmployeException {
+				
+				//Given
+				Double pourcentage = 20d;
+				Employe employe = new Employe();  
+				employe.setSalaire(1000d);
+				
+				//When
+				employe.augmenterSalaire(pourcentage);
+				
+				//Then
+				Double salaire = employe.getSalaire();
+				Assertions.assertThat(employe.getSalaire()).isEqualTo(1200d);
+			
+		}
+		
+		@Test
+		public void testAugmenterSalairePourcentage0() throws EmployeException {
+				
+				//Given
+				Double pourcentage = 0d;
+				Employe employe = new Employe(); 
+				employe.setSalaire(1000d);
+				
+				//When
+				employe.augmenterSalaire(pourcentage);
+				
+				//Then
+				Double salaire = employe.getSalaire();
+				Assertions.assertThat(employe.getSalaire()).isEqualTo(salaire);
+			
+		}
+		
+	
+	@Test
+	public void testAugmenterSalaire0() throws EmployeException {
+			
+			//Given
+			Double pourcentage = 20d;
+			Employe employe = new Employe();
+			employe.setSalaire(0d);
+			
+			//When
+			employe.augmenterSalaire(pourcentage);
+			
+			//Then
+			Assertions.assertThat(employe.getSalaire()).isEqualTo(0);
+		
+	}
+
+	
+		
+		@Test
+		void testExceptionAugmenterSalaireNull() {
+
+			//Given
+			Double pourcentage = 20d;
+			Employe employe = new Employe();
+			employe.setSalaire(null);
+			
+			Assertions.assertThatThrownBy(() -> {
+						//When
+				employe.augmenterSalaire(pourcentage);
+					})//Then
+							.isInstanceOf(EmployeException.class).hasMessage("Salaire non renseigné ou négatif !");	
+		}
+		
+		@Test
+		void testExceptionAugmenterSalaireNegatif() {
+
+			//Given
+			Double pourcentage = 20d;
+			Employe employe = new Employe();
+			employe.setSalaire(-1000d);
+			
+			Assertions.assertThatThrownBy(() -> {
+						//When
+				employe.augmenterSalaire(pourcentage);
+					})//Then
+							.isInstanceOf(EmployeException.class).hasMessage("Salaire non renseigné ou négatif !");	
+		}
+		
+		@Test
+		void testExceptionAugmenterSalairePourcentageNull() {
+
+			//Given
+			Employe employe = new Employe();
+			employe.setSalaire(1000d);
+			Assertions.assertThatThrownBy(() -> {
+						//When
+				employe.augmenterSalaire(null);
+					})//Then
+							.isInstanceOf(EmployeException.class).hasMessage("pourcentage non renseigné ou négatif !");	
+		}
+		
+		@Test
+		void testExceptionAugmenterSalairePourcentageNegatif() {
+
+			//Given
+			Double pourcentage = -20d;
+			Employe employe = new Employe();
+			employe.setSalaire(1000d);
+			Assertions.assertThatThrownBy(() -> {
+						//When
+				employe.augmenterSalaire(pourcentage);
+					})//Then
+							.isInstanceOf(EmployeException.class).hasMessage("pourcentage non renseigné ou négatif !");	
+		}
+		
+		
 		
 	
 	
