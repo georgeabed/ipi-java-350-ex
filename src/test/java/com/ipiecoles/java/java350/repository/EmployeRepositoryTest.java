@@ -3,7 +3,6 @@ package com.ipiecoles.java.java350.repository;
 import java.time.LocalDate;
 
 import org.assertj.core.api.Assertions;
-import org.hibernate.annotations.SelectBeforeUpdate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +54,28 @@ public class EmployeRepositoryTest {
 
 		//Then
 		Assertions.assertThat (lastMatricule).isEqualTo("67890");
+
+	}
+	
+	
+	@Test
+	void testAvgPerformanceWhereMatriculeStartsWith() { 
+
+		//Given
+		Employe e1 = new Employe("Doe", "John", "C12345", LocalDate.now(), 2000d, 2, 1.0); 
+		Employe e2 = new Employe("Doe", "Jane", "C67890", LocalDate.now(), 2000d, 2, 1.0);  
+		Employe e3 = new Employe("Doe", "Jane", "C45678", LocalDate.now(), 2000d, 2, 1.0);
+		
+		employeRepository.save(e1);
+		employeRepository.save(e2);
+		employeRepository.save(e3);
+		
+		//When
+		Double avgPerformance = employeRepository.avgPerformanceWhereMatriculeStartsWith("C");  
+
+
+		//Then
+		Assertions.assertThat (avgPerformance).isEqualTo(2);
 
 	}
 
