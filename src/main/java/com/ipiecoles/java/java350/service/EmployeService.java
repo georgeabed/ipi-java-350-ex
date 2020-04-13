@@ -38,11 +38,6 @@ public class EmployeService {
 	public void embaucheEmploye(String nom, String prenom, Poste poste, NiveauEtude niveauEtude, Double tempsPartiel) throws EmployeException, EntityExistsException {
 		logger.info("Tentative d'embauche d'un employé avec les paramètres : {}, {}, {}, {}, {}", nom, prenom, poste, niveauEtude, tempsPartiel);
 
-		logger.debug("dsfdsf");
-		logger.info("dsfdsf");
-		logger.warn("dsfdsf");
-		logger.error("dsfdsf");
-
 		//Récupération du type d'employé à partir du poste
 		String typeEmploye = poste.name().substring(0,1);
 		logger.debug("Type d'employé : " + typeEmploye);
@@ -88,9 +83,6 @@ public class EmployeService {
 		logger.debug("Employé qui va être sauvegardé : {}", employe.toString());
 		employe = employeRepository.save(employe);
 
-		//System.out.println(employe.toString());
-
-		//   logger.info("Employé sauvé an base : {}", employe.toString());
 
 	}
 
